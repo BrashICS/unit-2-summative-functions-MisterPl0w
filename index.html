@@ -6,7 +6,6 @@
         <title>Geometry Helper 📐</title>
         <link rel="icon" href="./images/favicon.png" sizes="any" type="image/png">
         <link rel="stylesheet" href="./style.css">
-        <script src="./main.js" defer></script>
     </head>
 
     <body>
@@ -17,7 +16,7 @@
         </h1>
 
         <h3>Use the tools below to help with your math!</h3>
-        
+
         <p>
             Round answers to the nearest
             <input type="number" id="rounding" value="4" placeholder="0" min="0" max="10"  class="short_number">
@@ -25,11 +24,53 @@
         </p>
 
         <hr>
+
         
         <!-- Geometry -->
         <div>
             <h4>Part 1 - Geometry</h4>
             
+            <!-- Geometric shapes -->
+            <p>
+                <label for="length">Length:</label>
+                <input id="length" name="length" type="number" value="1" placeholder="1" autocomplete="off" class="short_number"> &nbsp;
+                <label for="width">Width:</label>
+                <input id="width" name="width" type="number" value="1" placeholder="1" autocomplete="off" class="short_number"> &nbsp;
+                <label for="height">Height:</label>
+                <input id="height" name="height" type="number" value="1" placeholder="1" autocomplete="off" class="short_number"> &nbsp;
+                <label for="radius">Radius:</label>
+                <input id="radius" name="radius" type="number" value="1" placeholder="1" autocomplete="off" class="short_number">
+            </p>
+            <p>
+                <button id="rect_volume">Rectangular Prism Volume</button> 
+                <button id="rect_area">Rectangular Prism Surface Area</button> 
+                <button id="sphere_volume">Sphere Volume</button> 
+                <button id="sphere_area">Rectangular Prism Surface Area</button>
+            </p>
+            <div id="geo_output"></div>
+
+            <!-- Points / Coordinate Geometry -->
+            <p>
+                <label for="x1">X1:</label>
+                <input id="x1" name="x1" type="number" value="0" placeholder="0" autocomplete="off" class="short_number"> &nbsp;
+                <label for="y1">Y1:</label>
+                <input id="y1" name="y1h" type="number" value="0" placeholder="0" autocomplete="off" class="short_number"> &nbsp;
+                <label for="x2">X2:</label>
+                <input id="x2" name="x2" type="number" value="1" placeholder="1" autocomplete="off" class="short_number"> &nbsp;
+                <label for="y2">Y2:</label>
+                <input id="y2" name="y2" type="number" value="1" placeholder="1" autocomplete="off" class="short_number">
+            </p>
+            <p>
+                <button id="slope">Calculate Slope</button> 
+                <button id="length_btn">Calculate Length</button> 
+                <button id="midpoint">Calculate Midpoint</button> 
+            </p>
+            <div id="point_output"></div>
+
+
+
+
+
         </div>
         
         <hr>
@@ -41,21 +82,171 @@
                 Enter the values of "a", "b", and "c" of a quadratic in standard form:
             </p>
             
-            <label for="a">a:</label>
-            <input id="a" name="a" type="number" value="1" placeholder="1" autocomplete="off" class="short_number"> &nbsp;
-            <label for="b">b:</label>
-            <input id="b" type="number" value="1" placeholder="1" autocomplete="off" class="short_number"> &nbsp;
-            <label for="c">c:</label>
-            <input id="c" type="number" value="1" placeholder="1" autocomplete="off" class="short_number">
+            <p>
+                <label for="a">a:</label>
+                <input id="a" name="a" type="number" value="1" placeholder="1" autocomplete="off" class="short_number"> &nbsp;
+                <label for="b">b:</label>
+                <input id="b" type="number" value="1" placeholder="1" autocomplete="off" class="short_number"> &nbsp;
+                <label for="c">c:</label>
+                <input id="c" type="number" value="1" placeholder="1" autocomplete="off" class="short_number">
 
-            <button id="zeros">Find the Zeros</button> 
-            <button id="vertex">Find the Vertex</button>
-
+                <button id="zeros">Find the Zeros</button> 
+                <button id="vertex">Find the Vertex</button>
+            </p>
             <!-- Output for the zeros or vertex -->
             <div id="quadratic_output"></div>
         </div>
 
-        
 
     </body>
+        <script defer>
+            // Follow the rules
+            'use strict';
+
+            /*** Event Listeners ***/
+            document.getElementById("zeros").addEventListener("click", zeros);
+            document.getElementById("vertex").addEventListener("click", vertex);
+            document.getElementById("rect_area").addEventListener("click", rect_prism_area);
+            document.getElementById("rect_volume").addEventListener("click", rect_prism_volume);
+            document.getElementById("sphere_area").addEventListener("click", sphere_area);
+            document.getElementById("sphere_volume").addEventListener("click", sphere_volume);
+            document.getElementById("slope").addEventListener("click", slope_btn);
+            document.getElementById("length_btn").addEventListener("click", length_btn);
+            document.getElementById("midpoint").addEventListener("click", midpoint);
+
+            /*** Functions ***/
+
+            // Round to the nearest `decimals` number of decimals
+            function round(value, decimals) {
+                return Math.round(value * 10**decimals) / 10**decimals;
+            }
+
+            // Round to the user's number of decimals
+            function round_user(value) {
+                return round(value, +document.getElementById("rounding").value);
+            }
+
+            // Calculate the y-value of a parabola from standand form
+            function y_quad(a, b, c, x) {
+                let y = a*(x**2) + b*x + c;
+                return y;
+            }
+
+            // Determine the zeros of a quadratic using user-inputs for a, b, and c
+            function zeros() {
+                let a = +document.getElementById("a").value;
+                let b = +document.getElementById("b").value;
+                let c = +document.getElementById("c").value;
+
+                let z1 = round_user((-1*b + Math.sqrt(b**2 - 4*a*c))/(2*a));
+                let z2 = round_user((-1*b - Math.sqrt(b**2 - 4*a*c))/(2*a));
+                let answer = `The zeros are (${z2}, 0) and (${z1}, 0).`
+                document.getElementById("quadratic_output").textContent = answer;
+                console.log(answer);
+            }
+
+            // Determine the vertex of a quadratic using user-inputs for a, b, and c
+            function vertex() {
+                let a = +document.getElementById("a").value;
+                let b = +document.getElementById("b").value;
+                let c = +document.getElementById("c").value;
+
+                let x = (-1*b)/(2*a);
+                let y = y_quad(a, b, c, x);
+                let answer = `The vertex is (${round_user(x)}, ${round_user(y)}).`
+                document.getElementById("quadratic_output").textContent = answer;
+                console.log(answer);                
+            }
+
+            function delta(a, b) {
+                return a-b;
+            }
+
+            function slope(x1, y1, x2, y2) {
+                return delta(y1,y2)/delta(x1,x2);
+            }
+
+            // Calculate the average of two numbers
+            function average(n1, n2) {
+                return (n1+n2)/2;
+            }
+
+            // Calculate the distance between two points
+            function length(x1, y1, x2, y2) {
+                return Math.sqrt(delta(x1, x2)**2 + delta(y1, y2)**2);
+            }
+
+            // Calculate the volume and areas of the selected shapes
+            function rect_prism_volume() {
+                // Get the values
+                let l = +document.getElementById("length").value;
+                let w = +document.getElementById("width").value;
+                let h = +document.getElementById("height").value;
+                let answer = round_user(l*w*h);
+                document.getElementById("geo_output").textContent = `The volume of the rectangular prism is ${answer}`;
+                return answer;
+            }
+            function rect_prism_area() {
+                // Get the values
+                let l = +document.getElementById("length").value;
+                let w = +document.getElementById("width").value;
+                let h = +document.getElementById("height").value;
+                let answer = round_user(2*l*w + 2*l*h + 2*w*h);
+                document.getElementById("geo_output").textContent = `The surface area of the rectangular prism is ${answer}`;
+                return answer;
+            }
+            function sphere_volume() {
+                // Get the radius
+                let r = +document.getElementById("radius").value;
+                let answer = round_user((4/3) * Math.PI * r**3);
+                document.getElementById("geo_output").textContent = `The volume of the sphere is ${answer}`;
+                return answer;
+            }
+            function sphere_area() {
+                // Get the radius
+                let r = +document.getElementById("radius").value;
+                let answer = round_user(4*Math.PI*r**2);
+                document.getElementById("geo_output").textContent = `The surface area of the sphere is ${answer}`;
+                return answer;
+            }
+
+
+            // Coordinate Geometry functions
+            function slope_btn() {
+                // Get the values
+                let x1 = +document.getElementById("x1").value;
+                let y1 = +document.getElementById("y1").value;
+                let x2 = +document.getElementById("x2").value;
+                let y2 = +document.getElementById("y2").value;
+                // Call slope and write it to the screen
+                document.getElementById("point_output").textContent = `The slope between those points is ${round_user(slope(x1, y1, x2, y2))}`;
+            }
+            function length_btn() {
+                // Get the values
+                let x1 = +document.getElementById("x1").value;
+                let y1 = +document.getElementById("y1").value;
+                let x2 = +document.getElementById("x2").value;
+                let y2 = +document.getElementById("y2").value;
+                
+                // Call length and write it to the screen
+                document.getElementById("point_output").textContent = `The length between those points is ${round_user(length(x1, y1, x2, y2))}`;
+            }
+            function midpoint() {
+                // Get the values
+                let x1 = +document.getElementById("x1").value;
+                let y1 = +document.getElementById("y1").value;
+                let x2 = +document.getElementById("x2").value;
+                let y2 = +document.getElementById("y2").value;
+
+                // Calculate the midpoint
+                let xm = round_user(average(x1, x2));
+                let ym = round_user(average(y1, y2));
+
+                // Write it
+                document.getElementById("point_output").textContent = `The midpoint between those points is (${xm}, ${ym})`;
+            }
+
+
+
+        </script>
 </html>
