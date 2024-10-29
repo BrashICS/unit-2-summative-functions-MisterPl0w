@@ -1,3 +1,5 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/tsXAzHXV)
+[![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-2972f46106e565e64193e422d61a12cf1da4916b45550586e14ef0a7c637dd04.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=16670716)
 # Unit 2 Summative - Geometry Helper 📐
 
 ##### ICS3 - Mr. Brash 🐿️
@@ -36,7 +38,7 @@ You have 4 full class periods to complete this task (and any home time you wish 
 
 <br>
 
-Feel free to modify the style and content of [index.html](./index.html) but you must **manage your own time wisely**. Getting lost in the CSS or similar is not a valid reason for an incomplete submission.
+⌚ **Manage your own time wisely**. Getting lost in the CSS or similar is not a valid reason for an incomplete submission.
 
 <br>
 <br>

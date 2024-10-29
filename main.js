@@ -15,6 +15,7 @@ document.getElementById("vertex").addEventListener("click", vertex);
 /*** Functions ***/
 
 // Round to the nearest `decimals` number of decimals
+// There is a more accurate one, but this will do.
 function round(value, decimals) {
     return Math.round(value * 10**decimals) / 10**decimals;
 }
